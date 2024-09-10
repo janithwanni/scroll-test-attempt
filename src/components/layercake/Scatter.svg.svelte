@@ -8,6 +8,8 @@
 	export let stroke = "#000";
 	export let strokeWidth = 0;
 	export let fillKey = undefined;
+
+	console.log("in scatter comp", $data);
 </script>
 
 <g>
