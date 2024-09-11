@@ -104,7 +104,7 @@
 		z-index: 1;
 		display: flex;
 		justify-content: center;
-		top: 0;
+		top: 25%;
 		/* display: none; */
 	}
 	.steps {
