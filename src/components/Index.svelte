@@ -14,10 +14,7 @@
 	let cross = data.cross;
 	let time = data.time;
 
-	// console.log(copy);
-	// console.log(cross);
 	let barPlotData = valueCounts(cross.map((x) => x.class));
-	// console.log("barPlotData", barPlotData);
 	const width = 600;
 	const height = 600;
 
@@ -30,47 +27,35 @@
 	let editorialPlaces = [0, 2, 4, 6];
 </script>
 
-<div class="title">A simple scrollytelling experiment</div>
-
-<section id="scrolly">
-	<Scrolly bind:value>
-		{#each Array(7)
-			.fill(0)
-			.map((_, i) => i) as text, index}
-			{@const active = value === index}
-			{@const editorialIndex = editorialPlaces.indexOf(index)}
-			<div class="step">
-				<!-- {editorialIndex} -->
-				{#if editorialIndex !== -1}
-					<Editorial
-						id={copy.sections[editorialIndex].id}
-						chunks={copy.sections[editorialIndex].chunks}
-						{active}
-					/>
-					<!-- <p>A {active} {editorialIndex} {value} {index}</p> -->
-				{:else if value == 1}
-					<ScatterPlot data={cross} {active} {margin} />
-					<!-- <p>Scatterplot {active}</p> -->
-				{:else if value == 3}
-					<!-- <BarPlot data={cross} /> -->
-					<p>Barplot {active}</p>
-				{:else if value == 5}
-					<!-- <LinePlot data={time} /> -->
-					<p>Lineplot {active}</p>
-				{/if}
-			</div>
-			<div class="spacer"></div>
-		{/each}
-	</Scrolly>
-</section>
+<div class="title">{copy.title}</div>
+<div class="description">{copy.description}</div>
+<article>
+	{#each copy.sections as section, index}
+		<div class="step">
+			{#if section.type === "block"}
+				<Editorial chunks={section.chunks} />
+			{:else if section.type === "scatterplot"}
+				<ScatterPlot data={cross} {margin} chunks={section.chunks} />
+				<!-- <p>Scatterplot</p> -->
+			{:else if section.type === "barplot"}
+				<BarPlot data={cross} {margin} chunks={section.chunks} />
+			{:else if section.type === "lineplot"}
+				<LinePlot data={cross} {margin} chunks={section.chunks} />
+			{:else}
+				<div class="spacer"></div>
+			{/if}
+			<!-- <p>{section.type}</p> -->
+		</div>
+	{/each}
+</article>
 
 <!-- <Footer /> -->
 
 <style>
 	.step {
 		text-align: center;
-		height: 80vh;
 		width: 100%;
+		border: 1px solid black;
 	}
 	.spacer {
 		height: 20vh;
@@ -78,6 +63,9 @@
 	p {
 		border: 5px solid black;
 		width: 100%;
+	}
+	article {
+		width: 80%;
 	}
 	#scrolly {
 		width: 80vw;

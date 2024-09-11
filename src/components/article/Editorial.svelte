@@ -1,15 +1,12 @@
 <script>
 	import { fade } from "svelte/transition";
 	export let chunks; //array of strings
-	export let id;
-	export let active;
-
-	console.log("In editorial", active, id);
+	// export let active;
 </script>
 
 <!-- {#if active} -->
 <section>
-	<div {id} class="content">
+	<div class="content">
 		{#each chunks as text, i}
 			<p>{text}</p>
 		{/each}
